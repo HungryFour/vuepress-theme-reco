@@ -1,3 +1,12 @@
 .site-name {
   @apply text-reco-primary;
 }
+/* 
+.theme-container .theme-main {
+  display: block!important;
+}
+
+.page-container {
+  display: flex!important;
+  width: 100%!important;
+} */

@@ -1,6 +1,7 @@
 <template>
   <div v-if="!setedSitePassword" class="theme-container" :class="containerClass">
     <Navbar
+      v-if="!(frontmatter.home === true && frontmatter.hideNavbar === true)"
       :class="{
         'not-open': !isOpenSeries,
         'navbar-container--has-series': isMobile && hasSeries
@@ -34,6 +35,7 @@
 
     <div v-if="siteLoaded && sitePasswordPass">
       <Navbar
+        v-if="!(frontmatter.home === true && frontmatter.hideNavbar === true)"
         :class="{
           'not-open': !isOpenSeries,
           'navbar-container__mobile': hasSeries
@@ -66,6 +68,7 @@
 
 <script lang="ts" setup>
 import { toRefs } from 'vue'
+import { usePageFrontmatter } from 'vuepress/client'
 
 import Navbar from '../Navbar/index.vue'
 import Series from '../Series/index.vue'
@@ -74,7 +77,6 @@ import Password from '../Password/index.vue'
 import NavbarDropdownNemu from '../NavbarDropdownNemu.vue'
 
 import { useSeriesItems } from '@composables/index.js'
-
 const seriesItems = useSeriesItems()
 const hasSeries = computed(() => seriesItems.value.length > 0)
 
@@ -116,4 +118,7 @@ const props = defineProps({
   },
 })
 const { widthStyle } = toRefs(props)
+
+// 获取 frontmatter
+const frontmatter = usePageFrontmatter()
 </script>

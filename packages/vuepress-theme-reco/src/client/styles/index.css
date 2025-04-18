@@ -41,3 +41,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* === Add the rule at the very end === */
+/* Hide navbar on specific homepages */
+.theme-container.homepage-hide-navbar .navbar-container {
+  display: none;
+}
+/* ================================ */

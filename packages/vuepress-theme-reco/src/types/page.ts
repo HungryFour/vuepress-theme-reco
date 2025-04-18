@@ -1,5 +1,5 @@
 import type { GitPluginPageData } from '@vuepress/plugin-git'
-import type { MenuLink } from './nav.js'
+import type { MenuLink, NavbarConfig } from './nav.js'
 
 export interface HeaderItem {
   slug: string
@@ -99,5 +99,11 @@ export interface RecoThemeHomePageFrontmatter extends RecoThemePageFrontmatter {
   bannerBrand?: BannerBrand
   blog?: Blog
   footer?: Footer
+  navbar?: NavbarConfig
+  /**
+   * Whether to hide the navbar specifically on this homepage.
+   * @default false
+   */
+  hideNavbar?: boolean
   [key: string]: unknown
 }

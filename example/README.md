@@ -3,6 +3,8 @@ home: true
 isShowTitleInHome: true
 actionText: About
 actionLink: /views/other/about
+frontmatter:
+  hideNavbar: true
 modules:
   - BannerBrand
   - Blog

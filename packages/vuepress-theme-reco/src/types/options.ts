@@ -30,6 +30,13 @@ export interface RecoThemeLocaleData extends LocaleData {
    */
   colorModeSwitch?: boolean
 
+  /**
+   * Array of routes where navbar should be hidden
+   * 
+   * @example ['/posts/', '/tags/t1/1.html']
+   */
+  hideNavbarRoutes?: string[]
+
   password?: string | Array<string>
 
   /**
@@ -214,6 +221,12 @@ export interface RecoThemeLocaleData extends LocaleData {
   primaryColor?: string
 
   socialLinks?: Array<SocialLink>
+
+  /**
+   * Custom component name for the homepage layout.
+   * The component should be globally registered (e.g., placed in .vuepress/components).
+   */
+  homeComponent?: string
 }
 
 export type AutoAddCategoryToNavbarOptions = {

@@ -1,7 +1,6 @@
-
 import { isString } from 'vuepress/shared'
 import { convertToPinyin } from '@vuepress-reco/shared'
-import { getNavLink, useThemeLocaleData } from '@composables/index.js'
+import { getNavLink, useThemeLocaleData, usePageFrontmatter } from '@composables/index.js'
 import { useExtendPageData } from '@vuepress-reco/vuepress-plugin-page/composables'
 
 import type {
@@ -9,6 +8,8 @@ import type {
   MenuGroup,
   MenuLinkGroup,
   AutoAddCategoryToNavbarOptions,
+  RecoThemeHomePageFrontmatter,
+  NavbarConfig
 } from '../../../types'
 import { computed, ComputedRef } from 'vue'
 
@@ -33,13 +34,22 @@ function resolveNavbarItem(
 
 export const useNavbarConfig = (): ComputedRef<Array<MenuLink | MenuGroup<MenuLinkGroup>>> => {
   const themeLocal = useThemeLocaleData()
+  const frontmatter = usePageFrontmatter()
 
   const result = computed(() => {
+    let navItems: NavbarConfig = []
+    let shouldAutoAddCategories = true
+
+    if (!!frontmatter.value.home && Array.isArray(frontmatter.value.navbar)) {
+      navItems = [...frontmatter.value.navbar]
+      shouldAutoAddCategories = false
+    } else {
+      navItems = [...themeLocal.value.navbar || []]
+    }
+
     const autoAddCategoryToNavbar = themeLocal.value.autoAddCategoryToNavbar
 
-    let navItems = [...themeLocal.value.navbar || []]
-
-    if (autoAddCategoryToNavbar) {
+    if (shouldAutoAddCategories && autoAddCategoryToNavbar) {
       const { categorySummary } = useExtendPageData()
       const parsedData: any[] = []
 
@@ -62,7 +72,7 @@ export const useNavbarConfig = (): ComputedRef<Array<MenuLink | MenuGroup<MenuLi
         parsedData.push(parsedCategoriesData)
       }
 
-      const tagsData =  Object.values(categorySummary?.categories?.items || {})
+      const tagsData =  Object.values(categorySummary?.tags?.items || {})
       if (tagsData.length > 0) {
         const parsedTagsData: MenuLink | MenuGroup<MenuLinkGroup> = {
           text: themeLocal.value.tagsText || 'Tags',

@@ -1,12 +1,14 @@
-
 import { computed } from 'vue'
 
 import {
   useSeriesData,
   usePageCatalog,
   useMobileMenus,
-  usePageFrontmatter
+  usePageFrontmatter,
+  useHideNavbar
 } from '@composables/index.js'
+// Import RecoThemeHomePageFrontmatter for type hint
+import type { RecoThemeHomePageFrontmatter } from '../../../types'
 
 export function useContainerClass() {
   const {
@@ -14,8 +16,10 @@ export function useContainerClass() {
     isShowSeries,
   } = useSeriesData()
   const { isShowCatalog } = usePageCatalog()
+  // Remove generic type hint
   const frontmatter = usePageFrontmatter()
   const { isOpenMobileMenus } = useMobileMenus()
+  const { shouldHideNavbar } = useHideNavbar()
 
   const containerClass = computed(() => [
     {
@@ -24,6 +28,8 @@ export function useContainerClass() {
       'show-series': isShowSeries.value,
       'show-catalog': isShowCatalog.value,
       'mobile-menus--active': isOpenMobileMenus.value,
+      // Change comparison to truthy check to satisfy TS
+      'homepage-hide-navbar': (!!frontmatter.value.home && frontmatter.value.hideNavbar === true) || shouldHideNavbar.value,
     },
     frontmatter.value.pageClass,
   ])

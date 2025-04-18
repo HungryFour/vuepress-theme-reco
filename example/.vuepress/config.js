@@ -20,6 +20,7 @@ export default defineUserConfig({
   },
   bundler: viteBundler({}),
   theme: recoTheme({
+    hideNavbarRoutes: ['/tags/*'],
     locales: {
       '/': {
         selectLanguageName: '简体中文',
@@ -111,6 +112,7 @@ export default defineUserConfig({
     },
     autoSetSeries: true,
     componentsDir: './example/.vuepress/components',
+    homeComponent: 'MyCustomHome',
     bulletin: {
       body: [
         {
@@ -157,7 +159,7 @@ export default defineUserConfig({
         },
       ],
     },
-    password: ['14e1b600b1fd579f47433b88e8d85291'],
+    // password: ['14e1b600b1fd579f47433b88e8d85291'],
     // primaryColor: '#3aa675',
     friendshipLinks: [
       {

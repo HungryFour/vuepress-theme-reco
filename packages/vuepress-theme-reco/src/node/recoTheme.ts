@@ -29,6 +29,12 @@ export const recoTheme = (themeConfig: RecoThemeData): Theme => {
 
     extendsBundlerOptions,
 
+    define: () => {
+      return {
+        __HIDE_NAVBAR_ROUTES__: themeConfig.hideNavbarRoutes || []
+      }
+    },
+
     clientConfigFile: (app) => prepareClientConfigFile(app, themeConfig),
 
     alias: {
